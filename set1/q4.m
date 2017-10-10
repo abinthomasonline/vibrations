@@ -34,9 +34,6 @@ h = (exp(-1*zeta*wn*t).*sin(w0*t))./(m*w0); %unit amplitude response
 dt = t(2)-t(1); %time interval
 X(1) = 0; %initial condition
 for i=2:1:length(t)
-	X(i)=0;
-	for j=1:1:(i-1)	%loop for integration
-		X(i)=X(i)+p(j)*h(i-j)*dt;
-	end
+	X(i)=sum(p(1:i-1).*flip(h(1:i-1)))*dt; %integration (p multiplied with fliped h and summed up)
 end
 plot(t,X); %plot
