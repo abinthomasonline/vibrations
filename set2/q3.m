@@ -1,6 +1,7 @@
 load elcentro.mat %load elcentro data
 
 AC = zeros(1,2*length(p)-1); %Autocorrelation matrix
+T = [-1.*flip(t),t(2:end)]; %Time axis
 
 for i=1:1:length(p) %right shifted multipplication
 	AC(i:i+length(p)-1) = AC(i:i+length(p)-1) + p.*p(length(p)-i+1);
@@ -12,4 +13,4 @@ for i=1:1:length(p)-1 %dividing with frequency
 end
 AC(length(p)) = AC(length(p))./length(p);
 
-plot([-1.*flip(t),t(2:end)],AC); %plot
+plot(T,AC); %plot
