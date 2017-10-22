@@ -1,7 +1,7 @@
 load elcentro.mat %load elcentro data
 
 AC = zeros(1,2*length(p)-1); %Autocorrelation matrix
-T = [-1.*flip(t),t(2:end)]; %Time axis
+T = [-1.*flip(t),t(2:end)]; %Time delay axis
 
 for i=1:1:length(p) %right shifted multipplication
 	AC(i:i+length(p)-1) = AC(i:i+length(p)-1) + p.*p(length(p)-i+1);
