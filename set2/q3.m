@@ -1,5 +1,7 @@
 load elcentro.mat %load elcentro data
 
-AC = xcorr(p);
+dt = t(2)-t(1);
 
-plot(AC); %plot
+[AC, lags] = xcorr(p);
+
+plot(lags.*dt,AC); %plot
