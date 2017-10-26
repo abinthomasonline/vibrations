@@ -1,7 +1,9 @@
 load elcentro.mat %load elcentro data
 
-AC = xcorr(p); %autocorrelation
+[AC, lag] = xcorr(p); %autocorrelation
 
 S = abs(fft(AC)); %absolute value of discrete fourier transform of AC
 
-plot(S);
+w = lag.*((2*pi)/(length(AC)*dt)); %angular frequency axis
+
+plot(w, S); %plot
