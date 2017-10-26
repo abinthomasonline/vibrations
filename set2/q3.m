@@ -1,5 +1,5 @@
 load elcentro.mat %load elcentro data
 
-AC = xcov(p,length(p)-1);
+AC = xcorr(p);
 
 plot(AC); %plot
