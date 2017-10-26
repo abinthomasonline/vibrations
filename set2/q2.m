@@ -2,7 +2,7 @@ load elcentro.mat %load elcentro data
 
 dp = 0.01; %interval in x-axis
 x = min(p):dp:max(p); %x-axis
-x(length(x)+1) = x(length(x)) + dp; %end point of x-axis
+x(length(x)+1) = x(length(x)) + dp; %right end point of x-axis
 y = zeros(1, length(x)); %y-axis initialized with all zeros
 
 for i=1:1:length(p)
