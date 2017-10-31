@@ -1,9 +1,9 @@
 load elcentro.mat %load elcentro data
 
-S = (abs(fft(p)).^2).*(t(end)/(4*pi));
+dt = t(2)-t(1); f = 1/dt;
 
-dt = t(2)-t(1);
+S = abs(fft(p)).^2; %absolute value of discrete fourier transform of AC
 
-w = (1-length(p):2:length(p)-1).*((2*pi)/(length(AC)*dt)); %angular frequency axis
+w = -f/2:f/length(p):f/2-f/length(p); %frequency axis
 
-plot(w, S);
+plot(2*pi*w, S); %plot
