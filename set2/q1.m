@@ -12,6 +12,8 @@ for zeta=zetam
 	ga = 0.5; %gamma
 	be = 0.25; %beta
 	dt = t(2)-t(1); %time interval
+	f = 1/dt;
+        w = -f/2:f/length(p):f/2-f/length(p); %frequency axis
 	C1 = m/(be*dt) + (c*ga)/be; %coefficient of velocity in incrementation equation
 	C2 = m/(2*be) + (c*dt)*(ga/(2*be)-1); %coefficient of acceleration in incrementation equation
 	kc = k + (c*ga)/(be*dt) + m/(be*dt*dt); %coefficient of change in displacement in incrementation equation
@@ -26,8 +28,9 @@ for zeta=zetam
 		x(i+1)=x(i)+dx; %increment displacement
 		u(i+1)=u(i)+du; %increment velocity
 		a(i+1)=a(i)+da; %increment acceleration
-	end
-	plot(t,x); %plot
+        end
+        Su = abs(fft(x)).^2; %square of discrete fourier transform of p
+        plot(2*pi*w, Su); %plot
 end
 
 hold off;
