@@ -1,15 +1,14 @@
-load elcentro.mat %load elcentro data
+load elcentro.mat
 
-dp = 0.01; %interval in x-axis
-x = min(p):dp:max(p); %x-axis
-x(length(x)+1) = x(length(x)) + dp; %right end point of x-axis
-y = zeros(1, length(x)); %y-axis initialized with all zeros
+dp = 0.01;
+x = min(p):dp:max(p);
+x(length(x)+1) = x(length(x)) + dp;
+count = zeros(1, length(x));
 
 for i=1:1:length(p)
-	x_index = round((p(i)-min(p))/dp) + 1; % index to which p(i) belongs
-	y(x_index) = y(x_index) + 1; % increment y(index)
+	index = round((p(i)-min(p))/dp) + 1;
+	count(index) = count(index) + 1;
 end
 
-y = y./trapz(x,y); %normalization 'trapz() does integration'
-
-plot(x,y);
+probability = count./(dp*sum(count));
+plot(x,probability);
