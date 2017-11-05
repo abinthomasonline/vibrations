@@ -1,36 +1,35 @@
-k = 400;
-m = 100;
-zetam = [0.02, 0.05, 0.1]; %damping ratio matrix [1x3]
-wn = sqrt(k/m); %natural frequency
-load elcentro.mat %load exciting force data (file should be in the same folder)
+load elcentro.mat
+m = 100; k_vector = 0:4:1600;
 
-hold on; %to plot 3 responses on single graph
+hold on;
 
-for zeta=zetam
-	%newmark's beta method
-	c = 2*m*wn*zeta; %damping coefficient
-	ga = 0.5; %gamma
-	be = 0.25; %beta
-	dt = t(2)-t(1); %time interval
-	f = 1/dt;
-        w = -f/2:f/length(p):f/2-f/length(p); %frequency axis
-	C1 = m/(be*dt) + (c*ga)/be; %coefficient of velocity in incrementation equation
-	C2 = m/(2*be) + (c*dt)*(ga/(2*be)-1); %coefficient of acceleration in incrementation equation
-	kc = k + (c*ga)/(be*dt) + m/(be*dt*dt); %coefficient of change in displacement in incrementation equation
-	x(1)=0; %initial displacement
-	u(1)=0; %initial velocity
-	a(1)=(p(1)-k*x(1)-c*u(1))/m; %initial acceleration
-	for i=1:1:(length(t)-1)
-		dp=p(i+1)-p(i); %change in excitation
-		dx=(dp+C1*u(i)+C2*a(i))/kc; %change in displacement
-		du=(dx*ga)/(be*dt) - (u(i)*ga)/be - a(i)*dt*(ga/(2*be)-1); %change in velocity
-		da=dx/(be*dt*dt) - u(i)/(be*dt) - a(i)/(2*be); %change in acceleration
-		x(i+1)=x(i)+dx; %increment displacement
-		u(i+1)=u(i)+du; %increment velocity
-		a(i+1)=a(i)+da; %increment acceleration
-        end
-        Su = abs(fft(x)).^2; %square of discrete fourier transform of p
-        plot(2*pi*w, Su); %plot
+for zeta = [0.02, 0.05, 0.1]
+	for j=1:1:401
+		k = k_vector(j);
+		wn = sqrt(k/m);
+		c = 2*m*wn*zeta;
+		ga = 0.5;
+		be = 0.25;
+		dt = t(2)-t(1);
+		C1 = m/(be*dt) + (c*ga)/be;
+		C2 = m/(2*be) + (c*dt)*(ga/(2*be)-1);
+		kc = k + (c*ga)/(be*dt) + m/(be*dt*dt);
+		x(1)=0;
+		u(1)=0;
+		a(1)=(p(1)-k*x(1)-c*u(1))/m;
+		for i=1:1:(length(t)-1)
+			dp=p(i+1)-p(i);
+			dx=(dp+C1*u(i)+C2*a(i))/kc;
+			du=(dx*ga)/(be*dt) - (u(i)*ga)/be - a(i)*dt*(ga/(2*be)-1);
+			da=dx/(be*dt*dt) - u(i)/(be*dt) - a(i)/(2*be);
+			x(i+1)=x(i)+dx;
+			u(i+1)=u(i)+du;
+			a(i+1)=a(i)+da;
+		end
+		resp_spectrum(j) = max(x);
+	end
+	plot(sqrt(k_vector./m), resp_spectrum);
 end
-
-hold off;
+xlabel('wn - natural frequency');
+ylabel('maximum response');
+legend('0.02', '0.05', '0.1');
