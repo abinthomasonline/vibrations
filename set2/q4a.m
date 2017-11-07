@@ -20,6 +20,6 @@ dt = t(2)-t(1);
 dw = (2*pi)/(dt*L);
 w = dw*(-L/2:L/2-1);
 
-plot(w, S);
+plot(w, 2*pi*S);
 xlabel('w - angular frequency');
 ylabel('PSDF');
