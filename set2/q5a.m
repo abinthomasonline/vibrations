@@ -13,6 +13,8 @@ w = dw*(-L/2:L/2-1);
 FFT_p = fftshift(fft(p));
 H = 1./(-m*w.^2 + i*c*w + k);
 FFT_u = H.*FFT_p;
-u = ifft(fftshift(FFT_u))*L;
+u = ifft(fftshift(FFT_u));
 
 plot(t, u);
+xlabel('t - time');
+ylabel('u - response');
