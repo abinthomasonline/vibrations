@@ -10,7 +10,8 @@ for i = lag
 		sum = sum + p(j)*p(j+i);
 		count = count + 1;
 	end
-	auto_correlation(L+i) = auto_correlation(L-i) = sum/count;
+	auto_correlation(L+i) = sum/count;
+	auto_correlation(L-i) = sum/count;
 end
 
 dt = t(2) - t(1);
