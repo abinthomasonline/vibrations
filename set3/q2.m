@@ -13,10 +13,6 @@ M = eye(5)*m;
 
 [phi, w_sq] = eig(K, M);
 
-q = zeros(5, 1);
-dq = zeros(5, 1);
-ddq = zeros(5, 1); 
-
 for j=1:5
 	wn = sqrt(w_sq(j, j));
 	k = w_sq(j, j)*m;
@@ -39,12 +35,9 @@ for j=1:5
 		u(i+1)=u(i)+du;
 		a(i+1)=a(i)+da;
 	end
-	q(j) = max(x);
-	dq(j) = wn*q(j);
-	ddq(j) = wn*dq(j);
+	q = max(x);
+	printf('At wn = %d,\n', wn);
+	peak_resp = q*phi(:,j)'
+	peak_velo = wn*peak_resp
+	peak_acce = wn*peak_velo
 end
-
-
-peak_resp = phi*q
-peak_velo = phi*dq
-peak_acce = phi*ddq
