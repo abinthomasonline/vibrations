@@ -1,9 +1,13 @@
-load elcentro.mat %load elcentro data
+load elcentro.mat
 
-dt = t(2)-t(1); f = 1/dt;
+L = length(p);
+dt = t(2)-t(1);
+dw = (2*pi)/(dt*L);
+w = dw*(-L/2:L/2-1);
 
-S = abs(fft(p)).^2; %square of discrete fourier transform of p
+y = fftshift(fft(p))/L;
+S = y.*conj(y)./(2*dw);
 
-w = -f/2:f/length(p):f/2-f/length(p); %frequency axis
-
-plot(2*pi*w, 2*S); %plot
+plot(w, 2*S);
+xlabel('w - angular frequency');
+ylabel('PSDF');
