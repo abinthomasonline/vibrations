@@ -52,7 +52,7 @@ FFT_x = fftshift(fft(x))/L;
 S_x = FFT_x.*conj(FFT_x)./(2*dw);
 
 figure;
-plot(t, 2*S_u, t, 2*S_x);
-xlabel('t - time');
+plot(w, 2*S_u, w, 2*S_x);
+xlabel('w - angular frequency');
 ylabel('u - response');
 legend('spectral analysis', 'newmarks beta');
