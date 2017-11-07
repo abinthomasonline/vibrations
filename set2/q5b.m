@@ -1,3 +1,4 @@
+clear all
 load elcentro.mat
 
 m = 100;
