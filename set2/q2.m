@@ -12,3 +12,5 @@ end
 
 probability = count./(dp*sum(count));
 plot(x,probability);
+xlabel('elcentro load');
+ylabel('Probability');
